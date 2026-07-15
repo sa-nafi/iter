@@ -1,0 +1,18 @@
+# Environment variables
+.env
+
+# IDEs
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.swp
+
+# Mock Files
+mock/
