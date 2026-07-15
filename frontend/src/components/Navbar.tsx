@@ -1,16 +1,16 @@
 import { useState } from 'react'
 import { Menu, X } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { Link } from 'react-router-dom'
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
 
   const navLinks = [
-    { name: 'Features', href: '#features' },
-    { name: 'Algorithms', href: '#algorithms' },
-    { name: 'Demo', href: '#demo' },
-    { name: 'FAQ', href: '#faq' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'Features', href: '/#features' },
+    { name: 'Algorithms', href: '/algorithms/bisection' },
+    { name: 'FAQ', href: '/#faq' },
+    { name: 'Contact', href: '/#contact' },
   ]
 
   return (
@@ -18,9 +18,9 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex-shrink-0 flex items-center">
-            <a href="#" className="text-xl font-bold tracking-tight text-zinc-900">
+            <Link to="/" className="text-xl font-bold tracking-tight text-zinc-900">
               Itera<span className="text-zinc-400">.</span>
-            </a>
+            </Link>
           </div>
           
           {/* Desktop Menu */}
@@ -34,9 +34,9 @@ export default function Navbar() {
                 {link.name}
               </a>
             ))}
-            <button className="bg-zinc-900 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-zinc-800 transition-colors shadow-sm">
+            <Link to="/algorithms/bisection" className="bg-zinc-900 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-zinc-800 transition-colors shadow-sm">
               Get Started
-            </button>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -72,9 +72,9 @@ export default function Navbar() {
                 </a>
               ))}
               <div className="pt-4">
-                <button className="w-full bg-zinc-900 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-zinc-800 transition-colors">
+                <Link to="/algorithms/bisection" className="block w-full text-center bg-zinc-900 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-zinc-800 transition-colors">
                   Get Started
-                </button>
+                </Link>
               </div>
             </div>
           </motion.div>

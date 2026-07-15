@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { ArrowRight, Activity, Table as TableIcon, LineChart } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 export default function Hero() {
   return (
@@ -39,10 +40,10 @@ export default function Hero() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="mt-8 flex flex-col sm:flex-row justify-center lg:justify-start gap-4"
             >
-              <button className="flex items-center justify-center gap-2 bg-zinc-900 text-white px-8 py-3.5 rounded-xl font-medium hover:bg-zinc-800 transition-all shadow-md hover:shadow-lg">
+              <Link to="/algorithms/bisection" className="flex items-center justify-center gap-2 bg-zinc-900 text-white px-8 py-3.5 rounded-xl font-medium hover:bg-zinc-800 transition-all shadow-md hover:shadow-lg">
                 Explore Algorithms
                 <ArrowRight className="w-4 h-4" />
-              </button>
+              </Link>
               <button className="flex items-center justify-center gap-2 bg-white text-zinc-900 border border-zinc-200 px-8 py-3.5 rounded-xl font-medium hover:bg-zinc-50 transition-all shadow-sm">
                 View Documentation
               </button>
@@ -72,7 +73,7 @@ export default function Hero() {
               {/* Mockup Body */}
               <div className="p-6 grid grid-cols-3 gap-4">
                 {/* Graph Area */}
-                <div className="col-span-3 sm:col-span-2 h-48 bg-zinc-50 rounded-xl border border-zinc-100 p-4 relative overflow-hidden flex items-center justify-center">
+                <div className="col-span-3 sm:col-span-2 min-h-[12rem] bg-zinc-50 rounded-xl border border-zinc-100 p-4 relative overflow-hidden flex items-center justify-center">
                   <Activity className="w-8 h-8 text-zinc-300 absolute top-4 left-4" />
                   {/* Fake curve */}
                   <svg viewBox="0 0 100 50" className="w-full h-full stroke-zinc-900 stroke-2 fill-none stroke-[0.5]">

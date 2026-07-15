@@ -3,7 +3,6 @@ import Hero from '../components/Hero'
 import Stats from '../components/Stats'
 import Features from '../components/Features'
 import Algorithms from '../components/Algorithms'
-import Demo from '../components/Demo'
 import Comparison from '../components/Comparison'
 import Testimonials from '../components/Testimonials'
 import FAQ from '../components/FAQ'
@@ -19,7 +18,6 @@ export default function LandingPage() {
         <Stats />
         <Features />
         <Algorithms />
-        <Demo />
         <Comparison />
         <Testimonials />
         <FAQ />

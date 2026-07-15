@@ -1,4 +1,4 @@
-import { Code2, Globe, MessagesSquare } from 'lucide-react'
+import { Code2, Globe } from 'lucide-react'
 
 export default function Footer() {
   return (
@@ -20,7 +20,6 @@ export default function Footer() {
             <ul className="space-y-3">
               <li><a href="#features" className="text-sm text-zinc-500 hover:text-zinc-900 transition-colors">Features</a></li>
               <li><a href="#algorithms" className="text-sm text-zinc-500 hover:text-zinc-900 transition-colors">Algorithms</a></li>
-              <li><a href="#demo" className="text-sm text-zinc-500 hover:text-zinc-900 transition-colors">Demo</a></li>
               <li><a href="#faq" className="text-sm text-zinc-500 hover:text-zinc-900 transition-colors">FAQ</a></li>
             </ul>
           </div>
@@ -29,9 +28,8 @@ export default function Footer() {
             <h4 className="font-semibold text-zinc-900 mb-4 text-sm">Resources</h4>
             <ul className="space-y-3">
               <li><a href="#" className="text-sm text-zinc-500 hover:text-zinc-900 transition-colors">Documentation</a></li>
-              <li><a href="#" className="text-sm text-zinc-500 hover:text-zinc-900 transition-colors">API Reference</a></li>
-              <li><a href="#" className="text-sm text-zinc-500 hover:text-zinc-900 transition-colors">Community</a></li>
               <li><a href="#" className="text-sm text-zinc-500 hover:text-zinc-900 transition-colors">Blog</a></li>
+              <li><a href="#" className="text-sm text-zinc-500 hover:text-zinc-900 transition-colors">About Us</a></li>
             </ul>
           </div>
 
@@ -41,9 +39,6 @@ export default function Footer() {
               <li><a href="#contact" className="text-sm text-zinc-500 hover:text-zinc-900 transition-colors">Contact Us</a></li>
               <li><a href="#" className="text-sm text-zinc-500 hover:text-zinc-900 transition-colors inline-flex items-center gap-2 justify-center md:justify-start w-full">
                 <Code2 className="w-4 h-4" /> GitHub
-              </a></li>
-              <li><a href="#" className="text-sm text-zinc-500 hover:text-zinc-900 transition-colors inline-flex items-center gap-2 justify-center md:justify-start w-full">
-                <MessagesSquare className="w-4 h-4" /> Twitter
               </a></li>
               <li><a href="#" className="text-sm text-zinc-500 hover:text-zinc-900 transition-colors inline-flex items-center gap-2 justify-center md:justify-start w-full">
                 <Globe className="w-4 h-4" /> LinkedIn
