@@ -29,8 +29,8 @@ export default function Footer() {
             <h4 className="font-semibold text-zinc-900 mb-4 text-sm">Resources</h4>
             <ul className="space-y-3">
               <li><Link to="/docs" className="text-sm text-zinc-500 hover:text-zinc-900 transition-colors">Documentation</Link></li>
-              <li><a href="https://blog.numenlabs.com/" target="_blank" rel="noopener noreferrer" className="text-sm text-zinc-500 hover:text-zinc-900 transition-colors">Blog</a></li>
-              <li><a href="https://numenlabs.com/" target="_blank" rel="noopener noreferrer" className="text-sm text-zinc-500 hover:text-zinc-900 transition-colors">About Us</a></li>
+              <li><a href="https://numenlabs.tech/blog" target="_blank" rel="noopener noreferrer" className="text-sm text-zinc-500 hover:text-zinc-900 transition-colors">Blog</a></li>
+              <li><a href="https://numenlabs.tech/" target="_blank" rel="noopener noreferrer" className="text-sm text-zinc-500 hover:text-zinc-900 transition-colors">About Us</a></li>
             </ul>
           </div>
 
