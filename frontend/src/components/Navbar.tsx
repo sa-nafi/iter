@@ -8,7 +8,7 @@ export default function Navbar() {
 
   const navLinks = [
     { name: 'Features', href: '/#features' },
-    { name: 'Algorithms', href: '/algorithms/bisection' },
+    { name: 'Algorithms', href: '/#algorithms' },
     { name: 'FAQ', href: '/#faq' },
     { name: 'Contact', href: '/#contact' },
   ]
@@ -22,7 +22,7 @@ export default function Navbar() {
               Itera<span className="text-zinc-400">.</span>
             </Link>
           </div>
-          
+
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-8">
             {navLinks.map((link) => (

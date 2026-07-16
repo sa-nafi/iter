@@ -8,10 +8,10 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import type { BisectionIteration } from '@/lib/bisection'
+import type { Iteration } from '@/lib/types'
 
 interface Props {
-  iterations: BisectionIteration[]
+  iterations: Iteration[]
 }
 
 export default function IterationTable({ iterations }: Props) {

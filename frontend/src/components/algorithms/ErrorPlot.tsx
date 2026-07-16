@@ -1,10 +1,10 @@
 import { useMemo } from 'react'
 import Plot from 'react-plotly.js'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
-import type { BisectionIteration } from '@/lib/bisection'
+import type { Iteration } from '@/lib/types'
 
 interface Props {
-  iterations: BisectionIteration[]
+  iterations: Iteration[]
 }
 
 export default function ErrorPlot({ iterations }: Props) {

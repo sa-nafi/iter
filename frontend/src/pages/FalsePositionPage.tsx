@@ -1,17 +1,17 @@
 import { useNavigate } from 'react-router-dom'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import AlgorithmPageTemplate from '../components/algorithms/AlgorithmPageTemplate'
-import { runBisection } from '../lib/bisection'
+import { runFalsePosition } from '../lib/falsePosition'
 
-export default function BisectionPage() {
+export default function FalsePositionPage() {
   const navigate = useNavigate()
 
   const selector = (
     <Select 
-      defaultValue="Bisection Method"
+      defaultValue="False-Position Method"
       onValueChange={(val) => {
-        if (val === 'False-Position Method') {
-          navigate('/algorithms/false-position')
+        if (val === 'Bisection Method') {
+          navigate('/algorithms/bisection')
         }
       }}
     >
@@ -27,8 +27,8 @@ export default function BisectionPage() {
 
   return (
     <AlgorithmPageTemplate
-      methodId="bisection"
-      onRun={(params) => runBisection(params.funcStr, params.aStr, params.bStr, params.toleranceStr, params.maxIterationsStr)}
+      methodId="false-position"
+      onRun={(params) => runFalsePosition(params.funcStr, params.aStr, params.bStr, params.toleranceStr, params.maxIterationsStr)}
       selector={selector}
     />
   )

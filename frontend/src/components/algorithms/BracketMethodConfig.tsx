@@ -6,8 +6,10 @@ import { Button } from '@/components/ui/button'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { AlertCircle, Check, X, Info } from 'lucide-react'
 import { parse } from 'mathjs'
+import 'katex/dist/katex.min.css'
+import { BlockMath } from 'react-katex'
 
-export interface BisectionParams {
+export interface BracketMethodParams {
   funcStr: string
   aStr: string
   bStr: string
@@ -15,10 +17,10 @@ export interface BisectionParams {
   maxIterationsStr: string
 }
 
-export interface BisectionConfigProps {
-  onRun: (params: BisectionParams) => void
+export interface BracketMethodConfigProps {
+  onRun: (params: BracketMethodParams) => void
   error?: string | null
-  initialParams?: BisectionParams | null
+  initialParams?: BracketMethodParams | null
 }
 
 const SYMBOLS = [
@@ -35,14 +37,30 @@ const SYMBOLS = [
   ['|x|', 'abs()', 1],
 ] as const
 
-export default function BisectionConfig({ onRun, error, initialParams }: BisectionConfigProps) {
-  const [funcStr, setFuncStr] = useState(initialParams?.funcStr ?? 'x^2 - 4')
+export default function BracketMethodConfig({ onRun, error, initialParams }: BracketMethodConfigProps) {
+  const initialFuncStr = initialParams?.funcStr ?? 'x^2 - 4'
+  const [funcStr, setFuncStr] = useState(initialFuncStr)
   const [aStr, setAStr] = useState(initialParams?.aStr ?? '0')
   const [bStr, setBStr] = useState(initialParams?.bStr ?? '3')
   const [toleranceStr, setToleranceStr] = useState(initialParams?.toleranceStr ?? '0.0001')
   const [maxIterationsStr, setMaxIterationsStr] = useState(initialParams?.maxIterationsStr ?? '100')
   
-  const [isValid, setIsValid] = useState<boolean | null>(null)
+  const [isValid, setIsValid] = useState<boolean | null>(() => {
+    try {
+      parse(initialFuncStr)
+      return true
+    } catch {
+      return null
+    }
+  })
+  
+  const [texStr, setTexStr] = useState<string>(() => {
+    try {
+      return parse(initialFuncStr).toTex()
+    } catch {
+      return ''
+    }
+  })
   const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
@@ -52,6 +70,14 @@ export default function BisectionConfig({ onRun, error, initialParams }: Bisecti
       setBStr(initialParams.bStr)
       setToleranceStr(initialParams.toleranceStr)
       setMaxIterationsStr(initialParams.maxIterationsStr)
+
+      try {
+        const node = parse(initialParams.funcStr)
+        setTexStr(node.toTex())
+        setIsValid(true)
+      } catch {
+        // Fallback to let the debounce handle it if there's an error
+      }
     }
   }, [initialParams])
 
@@ -59,10 +85,12 @@ export default function BisectionConfig({ onRun, error, initialParams }: Bisecti
     const t = setTimeout(() => {
       if (!funcStr.trim()) {
         setIsValid(null)
+        setTexStr('')
         return
       }
       try {
-        parse(funcStr)
+        const node = parse(funcStr)
+        setTexStr(node.toTex())
         setIsValid(true)
       } catch {
         setIsValid(false)
@@ -124,7 +152,10 @@ export default function BisectionConfig({ onRun, error, initialParams }: Bisecti
               {isValid === false && <X className="w-4 h-4 text-red-500" />}
             </div>
           </div>
-          {isValid === false && <p className="text-xs text-red-500">Invalid mathematical expression.</p>}
+          
+          <div className={`bg-zinc-50 border border-zinc-200/70 rounded-lg p-3 my-2 flex justify-center overflow-x-auto shadow-inner min-h-[84px] items-center transition-opacity duration-200 ${isValid === false ? 'opacity-40 grayscale' : 'text-zinc-800'}`}>
+            {texStr ? <BlockMath math={`f(x) = ${texStr}`} /> : <span className="text-zinc-400 text-sm">...</span>}
+          </div>
           
           <div className="flex flex-wrap gap-1.5 pt-1">
             {SYMBOLS.map(([label, text, back]) => (

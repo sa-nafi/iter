@@ -44,9 +44,9 @@ export default function Hero() {
                 Explore Algorithms
                 <ArrowRight className="w-4 h-4" />
               </Link>
-              <button className="flex items-center justify-center gap-2 bg-white text-zinc-900 border border-zinc-200 px-8 py-3.5 rounded-xl font-medium hover:bg-zinc-50 transition-all shadow-sm">
+              <Link to="/docs" className="flex items-center justify-center gap-2 bg-white text-zinc-900 border border-zinc-200 px-8 py-3.5 rounded-xl font-medium hover:bg-zinc-50 transition-all shadow-sm">
                 View Documentation
-              </button>
+              </Link>
             </motion.div>
           </div>
 
