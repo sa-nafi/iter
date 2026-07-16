@@ -1,8 +1,7 @@
 import { parse } from 'mathjs'
-
 import type { Iteration, AlgorithmResult } from './types'
 
-export function runBisection(
+export function runFalsePosition(
   funcStr: string,
   aStr: string | number,
   bStr: string | number,
@@ -87,16 +86,21 @@ export function runBisection(
   let currentA = a
   let currentB = b
   let fCurrentA = fa
+  let fCurrentB = fb
 
   let iterations: Iteration[] = []
   let c = currentA
-  let error = (currentB - currentA) / 2
+  let oldC = currentA
+  let error = Math.abs(currentB - currentA)
 
   for (let i = 1; i <= maxIters; i++) {
-    c = (currentA + currentB) / 2
+    oldC = c
+    
+    // Regula Falsi formula
+    c = (currentA * fCurrentB - currentB * fCurrentA) / (fCurrentB - fCurrentA)
     const fc = f(c)
 
-    error = (currentB - currentA) / 2
+    error = i === 1 ? Math.abs(currentB - currentA) : Math.abs(c - oldC)
 
     iterations.push({
       iteration: i,
@@ -104,7 +108,7 @@ export function runBisection(
       b: currentB,
       c,
       fa: fCurrentA,
-      fb: f(currentB),
+      fb: fCurrentB,
       fc,
       error
     })
@@ -118,6 +122,7 @@ export function runBisection(
       fCurrentA = fc
     } else {
       currentB = c
+      fCurrentB = fc
     }
   }
 

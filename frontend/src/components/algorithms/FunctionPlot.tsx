@@ -2,7 +2,7 @@ import { useMemo, useState, useEffect, useRef } from 'react'
 import Plot from 'react-plotly.js'
 import { parse } from 'mathjs'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
-import type { BisectionIteration } from '@/lib/bisection'
+import type { Iteration } from '@/lib/types'
 import { Play, Pause, RotateCcw, StepForward, SkipForward } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
@@ -10,11 +10,12 @@ interface Props {
   funcStr: string
   a: number
   b: number
-  iterations: BisectionIteration[]
+  iterations: Iteration[]
   converged: boolean
+  method?: 'bisection' | 'false-position'
 }
 
-export default function FunctionPlot({ funcStr, a, b, iterations, converged }: Props) {
+export default function FunctionPlot({ funcStr, a, b, iterations, converged, method = 'bisection' }: Props) {
   const total = iterations.length
 
   const [step, setStep] = useState<number | null>(null)
@@ -141,8 +142,19 @@ export default function FunctionPlot({ funcStr, a, b, iterations, converged }: P
       }
     })
     
+    if (method === 'false-position') {
+      traces.push({
+        x: [it.a, it.b],
+        y: [it.fa, it.fb],
+        mode: 'lines+markers',
+        name: 'Secant Line',
+        line: { color: '#f59e0b', width: 2, dash: 'dot' },
+        marker: { color: '#f59e0b', size: 6 }
+      })
+    }
+    
     return traces
-  }, [funcStr, a, b, iterations, effectiveIdx, total, converged])
+  }, [funcStr, a, b, iterations, effectiveIdx, total, converged, method])
 
   return (
     <Card className="w-full overflow-hidden">
