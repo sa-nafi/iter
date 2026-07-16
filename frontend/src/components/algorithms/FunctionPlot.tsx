@@ -40,7 +40,7 @@ export default function FunctionPlot({ funcStr, a, b, iterations, converged, met
         return next
       })
     }, 1000 / speed)
-    
+
     return () => {
       if (timerRef.current) clearInterval(timerRef.current)
     }
@@ -56,17 +56,17 @@ export default function FunctionPlot({ funcStr, a, b, iterations, converged, met
     } catch {
       return []
     }
-    
+
     const margin = Math.abs(b - a) * 0.5 || 5
     const minX = a - margin
     const maxX = b + margin
-    
+
     const xVals = []
     const yVals = []
-    
+
     const steps = 200
     const stepSize = (maxX - minX) / steps
-    
+
     for (let i = 0; i <= steps; i++) {
       const x = minX + i * stepSize
       xVals.push(x)
@@ -76,7 +76,7 @@ export default function FunctionPlot({ funcStr, a, b, iterations, converged, met
         yVals.push(null)
       }
     }
-    
+
     const traces: any[] = [
       {
         x: xVals,
@@ -96,7 +96,7 @@ export default function FunctionPlot({ funcStr, a, b, iterations, converged, met
     const ys = yVals.filter(v => v !== null && isFinite(v)) as number[]
     const lo = Math.min(...ys)
     const hi = Math.max(...ys)
-    const yRange = [lo - (hi-lo)*0.05, hi + (hi-lo)*0.05]
+    const yRange = [lo - (hi - lo) * 0.05, hi + (hi - lo) * 0.05]
 
     // Current bracket bounds
     traces.push({
@@ -134,14 +134,14 @@ export default function FunctionPlot({ funcStr, a, b, iterations, converged, met
       y: [it.fc],
       mode: 'markers',
       name: isFinal && converged ? 'Root' : 'Current Estimate (c)',
-      marker: { 
-        color: isFinal && converged ? '#ef4444' : '#3b82f6', 
-        size: isFinal && converged ? 12 : 8, 
+      marker: {
+        color: isFinal && converged ? '#ef4444' : '#3b82f6',
+        size: isFinal && converged ? 12 : 8,
         symbol: isFinal && converged ? 'star' : 'circle',
         line: { color: '#ffffff', width: 1.5 }
       }
     })
-    
+
     if (method === 'false-position') {
       traces.push({
         x: [it.a, it.b],
@@ -152,7 +152,7 @@ export default function FunctionPlot({ funcStr, a, b, iterations, converged, met
         marker: { color: '#f59e0b', size: 6 }
       })
     }
-    
+
     return traces
   }, [funcStr, a, b, iterations, effectiveIdx, total, converged, method])
 
@@ -176,7 +176,7 @@ export default function FunctionPlot({ funcStr, a, b, iterations, converged, met
               showlegend: true,
               legend: { orientation: 'h', y: -0.2 }
             }}
-            config={{ responsive: true, displayModeBar: false }}
+            config={{ responsive: true, scrollZoom: true }}
             style={{ width: '100%', height: '100%' }}
           />
         </div>
@@ -200,7 +200,7 @@ export default function FunctionPlot({ funcStr, a, b, iterations, converged, met
                 <SkipForward className="w-4 h-4 mr-1.5" /> End
               </Button>
             </div>
-            
+
             <div className="flex items-center gap-4 text-sm text-zinc-600">
               <label className="flex items-center gap-2">
                 Speed

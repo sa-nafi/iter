@@ -4,6 +4,7 @@ import LandingPage from './pages/LandingPage'
 
 const BisectionPage = lazy(() => import('./pages/BisectionPage'))
 const FalsePositionPage = lazy(() => import('./pages/FalsePositionPage'))
+const DocumentationPage = lazy(() => import('./pages/DocumentationPage'))
 
 // A simple loading spinner to show while the heavy algorithm page loads
 function PageLoader() {
@@ -36,6 +37,14 @@ function App() {
             element={
               <Suspense fallback={<PageLoader />}>
                 <FalsePositionPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/docs"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <DocumentationPage />
               </Suspense>
             }
           />

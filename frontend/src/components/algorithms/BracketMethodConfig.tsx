@@ -38,14 +38,29 @@ const SYMBOLS = [
 ] as const
 
 export default function BracketMethodConfig({ onRun, error, initialParams }: BracketMethodConfigProps) {
-  const [funcStr, setFuncStr] = useState(initialParams?.funcStr ?? 'x^2 - 4')
+  const initialFuncStr = initialParams?.funcStr ?? 'x^2 - 4'
+  const [funcStr, setFuncStr] = useState(initialFuncStr)
   const [aStr, setAStr] = useState(initialParams?.aStr ?? '0')
   const [bStr, setBStr] = useState(initialParams?.bStr ?? '3')
   const [toleranceStr, setToleranceStr] = useState(initialParams?.toleranceStr ?? '0.0001')
   const [maxIterationsStr, setMaxIterationsStr] = useState(initialParams?.maxIterationsStr ?? '100')
   
-  const [isValid, setIsValid] = useState<boolean | null>(null)
-  const [texStr, setTexStr] = useState<string>('')
+  const [isValid, setIsValid] = useState<boolean | null>(() => {
+    try {
+      parse(initialFuncStr)
+      return true
+    } catch {
+      return null
+    }
+  })
+  
+  const [texStr, setTexStr] = useState<string>(() => {
+    try {
+      return parse(initialFuncStr).toTex()
+    } catch {
+      return ''
+    }
+  })
   const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
@@ -55,6 +70,14 @@ export default function BracketMethodConfig({ onRun, error, initialParams }: Bra
       setBStr(initialParams.bStr)
       setToleranceStr(initialParams.toleranceStr)
       setMaxIterationsStr(initialParams.maxIterationsStr)
+
+      try {
+        const node = parse(initialParams.funcStr)
+        setTexStr(node.toTex())
+        setIsValid(true)
+      } catch {
+        // Fallback to let the debounce handle it if there's an error
+      }
     }
   }, [initialParams])
 
@@ -62,6 +85,7 @@ export default function BracketMethodConfig({ onRun, error, initialParams }: Bra
     const t = setTimeout(() => {
       if (!funcStr.trim()) {
         setIsValid(null)
+        setTexStr('')
         return
       }
       try {
@@ -128,12 +152,10 @@ export default function BracketMethodConfig({ onRun, error, initialParams }: Bra
               {isValid === false && <X className="w-4 h-4 text-red-500" />}
             </div>
           </div>
-          {isValid === false && <p className="text-xs text-red-500">Invalid mathematical expression.</p>}
-          {isValid === true && funcStr.trim() !== '' && (
-            <div className="bg-zinc-50 border border-zinc-200/70 rounded-lg p-3 my-2 flex justify-center overflow-x-auto shadow-inner text-zinc-800">
-              <BlockMath math={`f(x) = ${texStr}`} />
-            </div>
-          )}
+          
+          <div className={`bg-zinc-50 border border-zinc-200/70 rounded-lg p-3 my-2 flex justify-center overflow-x-auto shadow-inner min-h-[84px] items-center transition-opacity duration-200 ${isValid === false ? 'opacity-40 grayscale' : 'text-zinc-800'}`}>
+            {texStr ? <BlockMath math={`f(x) = ${texStr}`} /> : <span className="text-zinc-400 text-sm">...</span>}
+          </div>
           
           <div className="flex flex-wrap gap-1.5 pt-1">
             {SYMBOLS.map(([label, text, back]) => (
