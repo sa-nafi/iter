@@ -28,8 +28,8 @@ interface Props {
   selector: React.ReactNode
 }
 
-const HISTORY_KEY = 'itera_shared_history'
-const PARAMS_KEY = 'itera_shared_params'
+const HISTORY_KEY = 'iter_shared_history'
+const PARAMS_KEY = 'iter_shared_params'
 
 export default function AlgorithmPageTemplate({ methodId, onRun, selector }: Props) {
   const navigate = useNavigate()
@@ -67,7 +67,7 @@ export default function AlgorithmPageTemplate({ methodId, onRun, selector }: Pro
       setParams(item.params)
       setResult(item.result)
       setView('calculator')
-      
+
       // Clear location state so it doesn't reload on subsequent renders
       window.history.replaceState({}, document.title)
     }

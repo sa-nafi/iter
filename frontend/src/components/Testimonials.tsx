@@ -3,7 +3,7 @@ import { Quote } from 'lucide-react'
 
 const testimonials = [
   {
-    quote: "Itera completely changed how I approach numerical analysis. Being able to step through the Newton-Raphson method and see the tangent line visually hit the x-axis made the math finally click for me.",
+    quote: "Iter completely changed how I approach numerical analysis. Being able to step through the Newton-Raphson method and see the tangent line visually hit the x-axis made the math finally click for me.",
     author: "Alex Rivera",
     role: "Computer Science Student",
     initials: "AR"

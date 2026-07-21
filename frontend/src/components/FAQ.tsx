@@ -10,11 +10,11 @@ const faqs = [
   },
   {
     question: "Is the platform free?",
-    answer: "Itera is completely free for individual students and educators. We also offer a premium tier for institutions that require advanced LMS integrations and dedicated support."
+    answer: "Iter is completely free for individual students and educators. We also offer a premium tier for institutions that require advanced LMS integrations and dedicated support."
   },
   {
     question: "Can teachers use it in classrooms?",
-    answer: "Absolutely. Itera is designed with educators in mind. You can use it during live lectures to demonstrate convergence, or assign interactive exercises to students."
+    answer: "Absolutely. Iter is designed with educators in mind. You can use it during live lectures to demonstrate convergence, or assign interactive exercises to students."
   },
   {
     question: "Can I export results?",
