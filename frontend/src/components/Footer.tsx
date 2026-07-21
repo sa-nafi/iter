@@ -9,7 +9,7 @@ export default function Footer() {
 
           <div className="md:col-span-1 text-center md:text-left">
             <a href="#" className="text-xl font-bold tracking-tight text-zinc-900 inline-block mb-4">
-              Itera<span className="text-zinc-400">.</span>
+              Iter<span className="text-zinc-400">.</span>
             </a>
             <p className="text-sm text-zinc-500 leading-relaxed max-w-xs mx-auto md:mx-0">
               An interactive platform for exploring numerical algorithms through real-time visualizations and step-by-step execution.
@@ -51,7 +51,7 @@ export default function Footer() {
 
         <div className="pt-8 border-t border-zinc-100 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-zinc-400">
-            &copy; {new Date().getFullYear()} Itera Platform. All rights reserved.
+            &copy; {new Date().getFullYear()} Iter Platform. All rights reserved.
           </p>
           <div className="flex gap-6">
             <a href="#" className="text-sm text-zinc-400 hover:text-zinc-900 transition-colors">Privacy Policy</a>

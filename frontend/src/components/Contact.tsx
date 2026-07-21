@@ -9,7 +9,7 @@ export default function Contact() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    const subject = encodeURIComponent(`Itera Support - Message from ${name}`)
+    const subject = encodeURIComponent(`Iter Support - Message from ${name}`)
     const body = encodeURIComponent(`Sender Name: ${name}\nSender Email: ${email}\n\nMessage:\n${message}`)
     window.location.href = `mailto:numen.foe133@aleeas.com?subject=${subject}&body=${body}`
   }
@@ -35,7 +35,7 @@ export default function Contact() {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="text-lg text-zinc-600 mb-8"
             >
-              Have questions about integrating Itera into your curriculum? Need support or want to suggest a new algorithm? We'd love to hear from you.
+              Have questions about integrating Iter into your curriculum? Need support or want to suggest a new algorithm? We'd love to hear from you.
             </motion.p>
 
             <motion.div

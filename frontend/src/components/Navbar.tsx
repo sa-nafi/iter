@@ -19,7 +19,7 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-16">
           <div className="flex-shrink-0 flex items-center">
             <Link to="/" className="text-xl font-bold tracking-tight text-zinc-900">
-              Itera<span className="text-zinc-400">.</span>
+              Iter<span className="text-zinc-400">.</span>
             </Link>
           </div>
 

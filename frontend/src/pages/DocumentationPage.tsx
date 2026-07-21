@@ -24,7 +24,7 @@ export default function DocumentationPage() {
             Documentation
           </h1>
           <p className="text-lg text-zinc-600 mb-12 max-w-2xl">
-            Learn how to use Itera to master numerical methods through interactive visualizations and step-by-step calculations.
+            Learn how to use Iter to master numerical methods through interactive visualizations and step-by-step calculations.
           </p>
 
           <div className="space-y-16">
@@ -39,7 +39,7 @@ export default function DocumentationPage() {
               </div>
               <div className="prose prose-zinc prose-lg max-w-none text-zinc-600 space-y-4">
                 <p>
-                  Itera is designed to be intuitive. To get started, navigate to the <strong>Algorithms</strong> page and select a method from the dropdown menu in the calculator view.
+                  Iter is designed to be intuitive. To get started, navigate to the <strong>Algorithms</strong> page and select a method from the dropdown menu in the calculator view.
                 </p>
                 <ul className="list-disc list-inside space-y-2 ml-4">
                   <li><strong>Function <span className="font-serif italic">f(x)</span></strong>: Enter your mathematical expression. You can use standard operators (`+`, `-`, `*`, `/`, `^`) and functions like `sin(x)` or `exp(x)`.</li>

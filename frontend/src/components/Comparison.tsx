@@ -9,7 +9,7 @@ const traditional = [
   'Hard to visualize convergence'
 ]
 
-const itera = [
+const iter = [
   'Interactive dynamic visualizations',
   'Real-time execution & recalculation',
   'Step-by-step state tracking',
@@ -29,7 +29,7 @@ export default function Comparison() {
             transition={{ duration: 0.5 }}
             className="text-3xl md:text-4xl font-bold text-zinc-900 tracking-tight"
           >
-            Why use Itera?
+            Why use Iter?
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -64,7 +64,7 @@ export default function Comparison() {
             </ul>
           </motion.div>
 
-          {/* Itera */}
+          {/* Iter */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -73,10 +73,10 @@ export default function Comparison() {
             className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8 md:p-10 shadow-2xl shadow-zinc-900/20"
           >
             <h3 className="text-xl font-semibold text-white mb-6 flex items-center gap-2">
-              Itera Platform <span className="text-xs bg-zinc-800 text-zinc-300 px-2 py-1 rounded-full ml-2 font-medium">New</span>
+              Iter Platform <span className="text-xs bg-zinc-800 text-zinc-300 px-2 py-1 rounded-full ml-2 font-medium">New</span>
             </h3>
             <ul className="space-y-4">
-              {itera.map((item, i) => (
+              {iter.map((item, i) => (
                 <li key={i} className="flex items-start gap-3">
                   <div className="mt-1 bg-emerald-500/20 p-1 rounded-full shrink-0">
                     <Check className="w-4 h-4 text-emerald-400" />

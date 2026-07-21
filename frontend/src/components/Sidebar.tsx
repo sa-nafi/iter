@@ -20,7 +20,7 @@ export default function Sidebar({ view, onNavigate }: SidebarProps) {
     <aside className="w-16 md:w-64 border-r border-zinc-200 bg-white flex flex-col h-full flex-shrink-0 transition-all">
       <div className="h-16 flex items-center justify-center md:justify-start px-0 md:px-6 border-b border-zinc-100">
         <Link to="/" className="text-xl font-bold tracking-tight text-zinc-900 hidden md:block">
-          Itera<span className="text-zinc-400">.</span>
+          Iter<span className="text-zinc-400">.</span>
         </Link>
         <Link to="/" className="text-xl font-bold tracking-tight text-zinc-900 block md:hidden">
           I<span className="text-zinc-400">.</span>
@@ -34,11 +34,10 @@ export default function Sidebar({ view, onNavigate }: SidebarProps) {
             <button
               key={id}
               onClick={() => onNavigate(id)}
-              className={`flex items-center justify-center md:justify-start px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                active 
-                  ? 'bg-zinc-100 text-zinc-900' 
+              className={`flex items-center justify-center md:justify-start px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${active
+                  ? 'bg-zinc-100 text-zinc-900'
                   : 'text-zinc-500 hover:text-zinc-900 hover:bg-zinc-50'
-              }`}
+                }`}
               title={label}
             >
               <Icon size={18} className={`flex-shrink-0 ${active ? 'text-zinc-900' : 'text-zinc-400'}`} />
