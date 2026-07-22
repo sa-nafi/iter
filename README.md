@@ -1,7 +1,7 @@
-# Itera
+# Iter
 **Interactive Mathematical Algorithms Visualizer**
 
-Itera is a premium, modern platform designed to help students, teachers, and engineers learn and understand numerical methods. Through interactive visualizations, step-by-step execution, and convergence analysis, Itera provides a paradigm shift in how numerical methods are taught and understood.
+Iter is a premium, modern platform designed to help students, teachers, and engineers learn and understand numerical methods. Through interactive visualizations, step-by-step execution, and convergence analysis, Iter provides a paradigm shift in how numerical methods are taught and understood.
 
 ## Features
 - **Interactive Visualizations**: Real-time graphing and dynamic geometric interpretations.
@@ -49,7 +49,7 @@ npm run build
 The optimized files will be generated in the `dist` folder.
 
 ## Design Philosophy
-Itera uses a strict monochrome minimalist theme with a focus on typography (utilizing the Geist font), ample whitespace, smooth micro-animations, and glassmorphism effects to deliver an enterprise-grade user experience.
+Iter uses a strict monochrome minimalist theme with a focus on typography (utilizing the Geist font), ample whitespace, smooth micro-animations, and glassmorphism effects to deliver an enterprise-grade user experience.
 
 ## Contributing and AI Agents
 If you are an AI Agent or developer contributing to this project, **YOU MUST** read the `AGENTS.md` file located in the root of this project before making any architectural decisions, adding new algorithms, or modifying the UI.

@@ -1,6 +1,6 @@
 # Agent Instructions & Project Conventions
 
-Welcome to the **Itera** codebase. If you are an AI Agent tasked with building new features, algorithms, or UI components, you **must strictly adhere** to the following rules and patterns to maintain the project's premium aesthetic and technical standards.
+Welcome to the **Iter** codebase. If you are an AI Agent tasked with building new features, algorithms, or UI components, you **must strictly adhere** to the following rules and patterns to maintain the project's premium aesthetic and technical standards.
 
 ## 1. Design & UI Aesthetics
 - **Theme**: We use a strict Vercel/Linear-inspired minimalist monochrome theme. Stick to `zinc-50` through `zinc-900`. Use white space generously.
