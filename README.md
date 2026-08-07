@@ -50,6 +50,3 @@ The optimized files will be generated in the `dist` folder.
 
 ## Design Philosophy
 Iter uses a strict monochrome minimalist theme with a focus on typography (utilizing the Geist font), ample whitespace, smooth micro-animations, and glassmorphism effects to deliver an enterprise-grade user experience.
-
-## Contributing and AI Agents
-If you are an AI Agent or developer contributing to this project, **YOU MUST** read the `AGENTS.md` file located in the root of this project before making any architectural decisions, adding new algorithms, or modifying the UI.
