@@ -6,7 +6,7 @@
 - [x] False Position
 - [x] Fixed Point
 - [x] Newton-Raphson
-- [ ] Secant
+- [x] Secant
 
 ## QOL 1
 

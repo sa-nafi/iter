@@ -54,3 +54,23 @@ export interface NewtonRaphsonResult {
   success: boolean
   message: string
 }
+
+export interface SecantIteration {
+  iteration: number
+  xPrev: number
+  xCurr: number
+  fPrev: number
+  fCurr: number
+  xNext: number
+  error: number
+}
+
+export interface SecantResult {
+  root: number | null
+  iterations: SecantIteration[]
+  totalIterations: number
+  finalError: number
+  executionTimeMs: number
+  success: boolean
+  message: string
+}

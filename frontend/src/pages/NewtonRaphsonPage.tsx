@@ -16,6 +16,8 @@ export default function NewtonRaphsonPage() {
           navigate('/algorithms/false-position')
         } else if (val === 'Fixed-Point Iteration') {
           navigate('/algorithms/fixed-point')
+        } else if (val === 'Secant Method') {
+          navigate('/algorithms/secant')
         }
       }}
     >
@@ -27,6 +29,7 @@ export default function NewtonRaphsonPage() {
         <SelectItem value="False-Position Method" className="font-medium">False-Position Method</SelectItem>
         <SelectItem value="Fixed-Point Iteration" className="font-medium">Fixed-Point Iteration</SelectItem>
         <SelectItem value="Newton-Raphson Method" className="font-medium">Newton-Raphson Method</SelectItem>
+        <SelectItem value="Secant Method" className="font-medium">Secant Method</SelectItem>
       </SelectContent>
     </Select>
   )
