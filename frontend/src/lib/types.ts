@@ -18,3 +18,20 @@ export interface AlgorithmResult {
   success: boolean
   message: string
 }
+
+export interface FixedPointIteration {
+  iteration: number
+  xi: number
+  gxi: number
+  error: number
+}
+
+export interface FixedPointResult {
+  root: number | null
+  iterations: FixedPointIteration[]
+  totalIterations: number
+  finalError: number
+  executionTimeMs: number
+  success: boolean
+  message: string
+}

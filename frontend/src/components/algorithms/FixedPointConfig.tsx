@@ -10,18 +10,17 @@ import 'katex/dist/katex.min.css'
 import katex from 'katex'
 import { formatToTex } from '@/lib/mathUtils'
 
-export interface BracketMethodParams {
-  funcStr: string
-  aStr: string
-  bStr: string
+export interface FixedPointParams {
+  gFuncStr: string
+  x0Str: string
   toleranceStr: string
   maxIterationsStr: string
 }
 
-export interface BracketMethodConfigProps {
-  onRun: (params: BracketMethodParams) => void
+export interface FixedPointConfigProps {
+  onRun: (params: FixedPointParams) => void
   error?: string | null
-  initialParams?: BracketMethodParams | null
+  initialParams?: FixedPointParams | null
 }
 
 const SYMBOLS = [
@@ -38,35 +37,33 @@ const SYMBOLS = [
   ['|x|', 'abs()', 1],
 ] as const
 
-export default function BracketMethodConfig({ onRun, error, initialParams }: BracketMethodConfigProps) {
-  const initialFuncStr = initialParams?.funcStr ?? 'x^2 - 4'
-  const [funcStr, setFuncStr] = useState(initialFuncStr)
-  const [aStr, setAStr] = useState(initialParams?.aStr ?? '0')
-  const [bStr, setBStr] = useState(initialParams?.bStr ?? '3')
+export default function FixedPointConfig({ onRun, error, initialParams }: FixedPointConfigProps) {
+  const initialGFuncStr = initialParams?.gFuncStr ?? '(2*x + 3)^(1/3)'
+  const [gFuncStr, setGFuncStr] = useState(initialGFuncStr)
+  const [x0Str, setX0Str] = useState(initialParams?.x0Str ?? '1.5')
   const [toleranceStr, setToleranceStr] = useState(initialParams?.toleranceStr ?? '0.0001')
-  const [maxIterationsStr, setMaxIterationsStr] = useState(initialParams?.maxIterationsStr ?? '100')
-  
+  const [maxIterationsStr, setMaxIterationsStr] = useState(initialParams?.maxIterationsStr ?? '50')
+
   const [isValid, setIsValid] = useState<boolean | null>(() => {
     try {
-      parse(initialFuncStr)
+      parse(initialGFuncStr)
       return true
     } catch {
       return null
     }
   })
-  
-  const [texStr, setTexStr] = useState<string>(() => formatToTex(initialFuncStr))
+
+  const [texStr, setTexStr] = useState<string>(() => formatToTex(initialGFuncStr))
   const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     if (initialParams) {
-      setFuncStr(initialParams.funcStr)
-      setAStr(initialParams.aStr)
-      setBStr(initialParams.bStr)
+      setGFuncStr(initialParams.gFuncStr)
+      setX0Str(initialParams.x0Str)
       setToleranceStr(initialParams.toleranceStr)
       setMaxIterationsStr(initialParams.maxIterationsStr)
 
-      const formatted = formatToTex(initialParams.funcStr)
+      const formatted = formatToTex(initialParams.gFuncStr)
       if (formatted) {
         setTexStr(formatted)
         setIsValid(true)
@@ -76,14 +73,14 @@ export default function BracketMethodConfig({ onRun, error, initialParams }: Bra
 
   useEffect(() => {
     const t = setTimeout(() => {
-      if (!funcStr.trim()) {
+      if (!gFuncStr.trim()) {
         setIsValid(null)
         setTexStr('')
         return
       }
       try {
-        parse(funcStr)
-        const formatted = formatToTex(funcStr)
+        parse(gFuncStr)
+        const formatted = formatToTex(gFuncStr)
         setTexStr(formatted)
         setIsValid(true)
       } catch {
@@ -91,17 +88,16 @@ export default function BracketMethodConfig({ onRun, error, initialParams }: Bra
       }
     }, 300)
     return () => clearTimeout(t)
-  }, [funcStr])
+  }, [gFuncStr])
 
   const insertSymbol = (text: string, caretBack: number) => {
     const el = inputRef.current
     if (!el) return
-    const start = el.selectionStart ?? funcStr.length
+    const start = el.selectionStart ?? gFuncStr.length
     const end = el.selectionEnd ?? start
-    const newText = funcStr.slice(0, start) + text + funcStr.slice(end)
-    setFuncStr(newText)
-    
-    // Focus and move cursor
+    const newText = gFuncStr.slice(0, start) + text + gFuncStr.slice(end)
+    setGFuncStr(newText)
+
     requestAnimationFrame(() => {
       el.focus()
       const pos = start + text.length - caretBack
@@ -110,14 +106,14 @@ export default function BracketMethodConfig({ onRun, error, initialParams }: Bra
   }
 
   const handleRun = () => {
-    onRun({ funcStr, aStr, bStr, toleranceStr, maxIterationsStr })
+    onRun({ gFuncStr, x0Str, toleranceStr, maxIterationsStr })
   }
 
   return (
     <Card className="w-full shadow-sm border-zinc-200">
       <CardHeader className="pb-4">
         <CardTitle className="text-lg">Input Parameters</CardTitle>
-        <CardDescription>Enter the parameters to find the root.</CardDescription>
+        <CardDescription>Configure the iteration function g(x) and initial guess.</CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         {error && (
@@ -127,17 +123,23 @@ export default function BracketMethodConfig({ onRun, error, initialParams }: Bra
             <AlertDescription className="text-xs">{error}</AlertDescription>
           </Alert>
         )}
-        
+
         <div className="space-y-3">
-          <Label htmlFor="funcStr" className="text-sm font-medium">Function f(x)</Label>
+          <Label htmlFor="gFuncStr" className="text-sm font-medium">Iteration Function g(x)</Label>
           <div className="relative">
-            <Input 
-              id="funcStr" 
+            <Input
+              id="gFuncStr"
               ref={inputRef}
-              value={funcStr} 
-              onChange={(e) => setFuncStr(e.target.value)} 
-              placeholder="e.g. x^3 - x - 2"
-              className={`font-mono h-11 text-base pr-10 ${isValid === false ? 'border-red-500 focus-visible:ring-red-500' : isValid === true ? 'border-green-500 focus-visible:ring-green-500' : ''}`}
+              value={gFuncStr}
+              onChange={(e) => setGFuncStr(e.target.value)}
+              placeholder="e.g. (2*x + 3)^(1/3) or sqrt(x + 2)"
+              className={`font-mono h-11 text-base pr-10 ${
+                isValid === false
+                  ? 'border-red-500 focus-visible:ring-red-500'
+                  : isValid === true
+                  ? 'border-green-500 focus-visible:ring-green-500'
+                  : ''
+              }`}
               autoComplete="off"
               spellCheck="false"
             />
@@ -146,12 +148,16 @@ export default function BracketMethodConfig({ onRun, error, initialParams }: Bra
               {isValid === false && <X className="w-4 h-4 text-red-500" />}
             </div>
           </div>
-          
-          <div className={`bg-zinc-50 border border-zinc-200/70 rounded-lg p-3 my-2 flex justify-center overflow-x-auto shadow-inner min-h-[84px] items-center transition-opacity duration-200 ${isValid === false ? 'opacity-40 grayscale' : 'text-zinc-800'}`}>
+
+          <div
+            className={`bg-zinc-50 border border-zinc-200/70 rounded-lg p-3 my-2 flex justify-center overflow-x-auto shadow-inner min-h-[84px] items-center transition-opacity duration-200 ${
+              isValid === false ? 'opacity-40 grayscale' : 'text-zinc-800'
+            }`}
+          >
             {texStr ? (
               <div
                 dangerouslySetInnerHTML={{
-                  __html: katex.renderToString(`f(x) = ${texStr}`, {
+                  __html: katex.renderToString(`g(x) = ${texStr}`, {
                     displayMode: true,
                     throwOnError: false
                   })
@@ -161,7 +167,7 @@ export default function BracketMethodConfig({ onRun, error, initialParams }: Bra
               <span className="text-zinc-400 text-sm">...</span>
             )}
           </div>
-          
+
           <div className="flex flex-wrap gap-1.5 pt-1">
             {SYMBOLS.map(([label, text, back]) => (
               <button
@@ -177,48 +183,38 @@ export default function BracketMethodConfig({ onRun, error, initialParams }: Bra
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label htmlFor="aStr" className="text-sm font-medium">Lower Bound (xl)</Label>
-            <Input 
-              id="aStr" 
-              type="number"
-              value={aStr} 
-              onChange={(e) => setAStr(e.target.value)} 
-              className="h-11 text-base font-mono"
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="bStr" className="text-sm font-medium">Upper Bound (xu)</Label>
-            <Input 
-              id="bStr" 
-              type="number"
-              value={bStr} 
-              onChange={(e) => setBStr(e.target.value)} 
-              className="h-11 text-base font-mono"
-            />
-          </div>
+        <div className="space-y-2">
+          <Label htmlFor="x0Str" className="text-sm font-medium">Initial Guess (x₀)</Label>
+          <Input
+            id="x0Str"
+            type="number"
+            value={x0Str}
+            onChange={(e) => setX0Str(e.target.value)}
+            step="any"
+            className="h-11 text-base font-mono"
+            placeholder="1.5"
+          />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
             <Label htmlFor="toleranceStr" className="text-sm font-medium">Tolerance (ε)</Label>
-            <Input 
-              id="toleranceStr" 
+            <Input
+              id="toleranceStr"
               type="number"
-              value={toleranceStr} 
-              onChange={(e) => setToleranceStr(e.target.value)} 
+              value={toleranceStr}
+              onChange={(e) => setToleranceStr(e.target.value)}
               step="0.0001"
               className="h-11 text-base font-mono"
             />
           </div>
           <div className="space-y-2">
             <Label htmlFor="maxIterationsStr" className="text-sm font-medium">Max Iterations</Label>
-            <Input 
-              id="maxIterationsStr" 
+            <Input
+              id="maxIterationsStr"
               type="number"
-              value={maxIterationsStr} 
-              onChange={(e) => setMaxIterationsStr(e.target.value)} 
+              value={maxIterationsStr}
+              onChange={(e) => setMaxIterationsStr(e.target.value)}
               className="h-11 text-base font-mono"
             />
           </div>
@@ -226,19 +222,19 @@ export default function BracketMethodConfig({ onRun, error, initialParams }: Bra
 
         <div className="bg-blue-50/50 p-4 rounded-lg border border-blue-100 text-sm text-blue-900 space-y-2">
           <div className="flex items-center gap-2 font-medium">
-            <Info className="w-4 h-4" /> Requirements
+            <Info className="w-4 h-4" /> Fixed-Point Guidelines
           </div>
-          <ul className="list-disc list-inside space-y-1 ml-1 text-blue-800">
-            <li>xl must be less than xu</li>
-            <li>f(xl) and f(xu) must have opposite signs</li>
-            <li>Tolerance must be {'>'} 0</li>
-            <li>Max iterations must be {'>'} 0</li>
+          <ul className="list-disc list-inside space-y-1 ml-1 text-blue-800 text-xs leading-relaxed">
+            <li>Formulate equation as <span className="font-mono">x = g(x)</span></li>
+            <li>Convergence requires <span className="font-mono">|g'(x)| &lt; 1</span> near the root</li>
+            <li>Iteration rule: <span className="font-mono">x_{'{i+1}'} = g(x_i)</span></li>
+            <li>Tolerance & Max Iterations must be &gt; 0</li>
           </ul>
         </div>
       </CardContent>
       <CardFooter className="pt-2">
         <Button onClick={handleRun} className="w-full h-11 text-base" disabled={isValid === false}>
-          Calculate Root
+          Calculate Fixed Point
         </Button>
       </CardFooter>
     </Card>

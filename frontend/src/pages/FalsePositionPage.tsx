@@ -12,6 +12,8 @@ export default function FalsePositionPage() {
       onValueChange={(val) => {
         if (val === 'Bisection Method') {
           navigate('/algorithms/bisection')
+        } else if (val === 'Fixed-Point Iteration') {
+          navigate('/algorithms/fixed-point')
         }
       }}
     >
@@ -21,6 +23,7 @@ export default function FalsePositionPage() {
       <SelectContent alignItemWithTrigger={false} align="start">
         <SelectItem value="Bisection Method" className="font-medium">Bisection Method</SelectItem>
         <SelectItem value="False-Position Method" className="font-medium">False-Position Method</SelectItem>
+        <SelectItem value="Fixed-Point Iteration" className="font-medium">Fixed-Point Iteration</SelectItem>
       </SelectContent>
     </Select>
   )

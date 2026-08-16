@@ -1,19 +1,19 @@
 import { useNavigate } from 'react-router-dom'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import AlgorithmPageTemplate from '../components/algorithms/AlgorithmPageTemplate'
-import { runBisection } from '../lib/bisection'
+import FixedPointTemplate from '../components/algorithms/FixedPointTemplate'
+import { runFixedPoint } from '../lib/fixedPoint'
 
-export default function BisectionPage() {
+export default function FixedPointPage() {
   const navigate = useNavigate()
 
   const selector = (
-    <Select 
-      defaultValue="Bisection Method"
+    <Select
+      defaultValue="Fixed-Point Iteration"
       onValueChange={(val) => {
-        if (val === 'False-Position Method') {
+        if (val === 'Bisection Method') {
+          navigate('/algorithms/bisection')
+        } else if (val === 'False-Position Method') {
           navigate('/algorithms/false-position')
-        } else if (val === 'Fixed-Point Iteration') {
-          navigate('/algorithms/fixed-point')
         }
       }}
     >
@@ -29,9 +29,8 @@ export default function BisectionPage() {
   )
 
   return (
-    <AlgorithmPageTemplate
-      methodId="bisection"
-      onRun={(params) => runBisection(params.funcStr, params.aStr, params.bStr, params.toleranceStr, params.maxIterationsStr)}
+    <FixedPointTemplate
+      onRun={(params) => runFixedPoint(params.gFuncStr, params.x0Str, params.toleranceStr, params.maxIterationsStr)}
       selector={selector}
     />
   )

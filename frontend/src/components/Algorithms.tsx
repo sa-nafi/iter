@@ -6,7 +6,7 @@ const categories = [
     title: 'Root Finding',
     description: 'Algorithms designed to find the zeroes of continuous functions.',
     icon: Hash,
-    algorithms: ['Bisection Method', 'False Position Method', 'Newton-Raphson Method']
+    algorithms: ['Bisection Method', 'False Position Method', 'Fixed Point Iteration', 'Newton-Raphson Method']
   },
   {
     title: 'Linear Systems',

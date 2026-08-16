@@ -4,7 +4,7 @@
 
 - [x] Bisection
 - [x] False Position
-- [ ] Fixed Point
+- [x] Fixed Point
 - [ ] Newton-Raphson
 - [ ] Secant
 
