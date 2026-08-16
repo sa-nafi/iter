@@ -1,21 +1,21 @@
 import { useNavigate } from 'react-router-dom'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import FixedPointTemplate from '../components/algorithms/FixedPointTemplate'
-import { runFixedPoint } from '../lib/fixedPoint'
+import NewtonRaphsonTemplate from '../components/algorithms/NewtonRaphsonTemplate'
+import { runNewtonRaphson } from '../lib/newtonRaphson'
 
-export default function FixedPointPage() {
+export default function NewtonRaphsonPage() {
   const navigate = useNavigate()
 
   const selector = (
     <Select
-      defaultValue="Fixed-Point Iteration"
+      defaultValue="Newton-Raphson Method"
       onValueChange={(val) => {
         if (val === 'Bisection Method') {
           navigate('/algorithms/bisection')
         } else if (val === 'False-Position Method') {
           navigate('/algorithms/false-position')
-        } else if (val === 'Newton-Raphson Method') {
-          navigate('/algorithms/newton-raphson')
+        } else if (val === 'Fixed-Point Iteration') {
+          navigate('/algorithms/fixed-point')
         }
       }}
     >
@@ -32,8 +32,16 @@ export default function FixedPointPage() {
   )
 
   return (
-    <FixedPointTemplate
-      onRun={(params) => runFixedPoint(params.gFuncStr, params.x0Str, params.toleranceStr, params.maxIterationsStr)}
+    <NewtonRaphsonTemplate
+      onRun={(params) =>
+        runNewtonRaphson(
+          params.funcStr,
+          params.x0Str,
+          params.toleranceStr,
+          params.maxIterationsStr,
+          params.customDerivStr
+        )
+      }
       selector={selector}
     />
   )

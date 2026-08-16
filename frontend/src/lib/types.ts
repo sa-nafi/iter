@@ -35,3 +35,22 @@ export interface FixedPointResult {
   success: boolean
   message: string
 }
+
+export interface NewtonRaphsonIteration {
+  iteration: number
+  xi: number
+  fxi: number
+  dfxi: number
+  nextXi: number
+  error: number
+}
+
+export interface NewtonRaphsonResult {
+  root: number | null
+  iterations: NewtonRaphsonIteration[]
+  totalIterations: number
+  finalError: number
+  executionTimeMs: number
+  success: boolean
+  message: string
+}
