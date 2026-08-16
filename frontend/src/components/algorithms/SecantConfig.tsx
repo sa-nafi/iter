@@ -1,8 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card'
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Button } from '@/components/ui/button'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { AlertCircle, Check, X, Info } from 'lucide-react'
 import { parse } from 'mathjs'
@@ -10,18 +9,18 @@ import 'katex/dist/katex.min.css'
 import katex from 'katex'
 import { formatToTex } from '@/lib/mathUtils'
 
-export interface BracketMethodParams {
+export interface SecantParams {
   funcStr: string
-  aStr: string
-  bStr: string
+  x0Str: string
+  x1Str: string
   toleranceStr: string
   maxIterationsStr: string
 }
 
-export interface BracketMethodConfigProps {
-  onRun: (params: BracketMethodParams) => void
+export interface SecantConfigProps {
+  onRun: (params: SecantParams) => void
   error?: string | null
-  initialParams?: BracketMethodParams | null
+  initialParams?: SecantParams | null
 }
 
 const SYMBOLS = [
@@ -38,14 +37,14 @@ const SYMBOLS = [
   ['|x|', 'abs()', 1],
 ] as const
 
-export default function BracketMethodConfig({ onRun, error, initialParams }: BracketMethodConfigProps) {
-  const initialFuncStr = initialParams?.funcStr ?? 'x^2 - 4'
+export default function SecantConfig({ onRun, error, initialParams }: SecantConfigProps) {
+  const initialFuncStr = initialParams?.funcStr ?? 'x^3 - x - 2'
   const [funcStr, setFuncStr] = useState(initialFuncStr)
-  const [aStr, setAStr] = useState(initialParams?.aStr ?? '0')
-  const [bStr, setBStr] = useState(initialParams?.bStr ?? '3')
+  const [x0Str, setX0Str] = useState(initialParams?.x0Str ?? '1')
+  const [x1Str, setX1Str] = useState(initialParams?.x1Str ?? '2')
   const [toleranceStr, setToleranceStr] = useState(initialParams?.toleranceStr ?? '0.0001')
-  const [maxIterationsStr, setMaxIterationsStr] = useState(initialParams?.maxIterationsStr ?? '100')
-  
+  const [maxIterationsStr, setMaxIterationsStr] = useState(initialParams?.maxIterationsStr ?? '50')
+
   const [isValid, setIsValid] = useState<boolean | null>(() => {
     try {
       parse(initialFuncStr)
@@ -54,15 +53,15 @@ export default function BracketMethodConfig({ onRun, error, initialParams }: Bra
       return null
     }
   })
-  
+
   const [texStr, setTexStr] = useState<string>(() => formatToTex(initialFuncStr))
   const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     if (initialParams) {
       setFuncStr(initialParams.funcStr)
-      setAStr(initialParams.aStr)
-      setBStr(initialParams.bStr)
+      setX0Str(initialParams.x0Str)
+      setX1Str(initialParams.x1Str)
       setToleranceStr(initialParams.toleranceStr)
       setMaxIterationsStr(initialParams.maxIterationsStr)
 
@@ -100,8 +99,7 @@ export default function BracketMethodConfig({ onRun, error, initialParams }: Bra
     const end = el.selectionEnd ?? start
     const newText = funcStr.slice(0, start) + text + funcStr.slice(end)
     setFuncStr(newText)
-    
-    // Focus and move cursor
+
     requestAnimationFrame(() => {
       el.focus()
       const pos = start + text.length - caretBack
@@ -110,14 +108,14 @@ export default function BracketMethodConfig({ onRun, error, initialParams }: Bra
   }
 
   const handleRun = () => {
-    onRun({ funcStr, aStr, bStr, toleranceStr, maxIterationsStr })
+    onRun({ funcStr, x0Str, x1Str, toleranceStr, maxIterationsStr })
   }
 
   return (
     <Card className="w-full shadow-sm border-zinc-200">
       <CardHeader className="pb-4">
         <CardTitle className="text-lg">Input Parameters</CardTitle>
-        <CardDescription>Enter the parameters to find the root.</CardDescription>
+        <CardDescription>Configure the function f(x) and initial approximations.</CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         {error && (
@@ -127,17 +125,19 @@ export default function BracketMethodConfig({ onRun, error, initialParams }: Bra
             <AlertDescription className="text-xs">{error}</AlertDescription>
           </Alert>
         )}
-        
+
         <div className="space-y-3">
           <Label htmlFor="funcStr" className="text-sm font-medium">Function f(x)</Label>
           <div className="relative">
-            <Input 
-              id="funcStr" 
+            <Input
+              id="funcStr"
               ref={inputRef}
-              value={funcStr} 
-              onChange={(e) => setFuncStr(e.target.value)} 
+              value={funcStr}
+              onChange={(e) => setFuncStr(e.target.value)}
               placeholder="e.g. x^3 - x - 2"
-              className={`font-mono h-11 text-base pr-10 ${isValid === false ? 'border-red-500 focus-visible:ring-red-500' : isValid === true ? 'border-green-500 focus-visible:ring-green-500' : ''}`}
+              className={`font-mono h-11 text-base pr-10 ${
+                isValid === false ? 'border-red-500 focus-visible:ring-red-500' : isValid === true ? 'border-green-500 focus-visible:ring-green-500' : ''
+              }`}
               autoComplete="off"
               spellCheck="false"
             />
@@ -146,8 +146,12 @@ export default function BracketMethodConfig({ onRun, error, initialParams }: Bra
               {isValid === false && <X className="w-4 h-4 text-red-500" />}
             </div>
           </div>
-          
-          <div className={`bg-zinc-50 border border-zinc-200/70 rounded-lg p-3 my-2 flex justify-center overflow-x-auto shadow-inner min-h-[84px] items-center transition-opacity duration-200 ${isValid === false ? 'opacity-40 grayscale' : 'text-zinc-800'}`}>
+
+          <div
+            className={`bg-zinc-50 border border-zinc-200/70 rounded-lg p-3 my-2 flex justify-center items-center overflow-x-auto shadow-inner min-h-[64px] transition-opacity duration-200 ${
+              isValid === false ? 'opacity-40 grayscale' : 'text-zinc-800'
+            }`}
+          >
             {texStr ? (
               <div
                 dangerouslySetInnerHTML={{
@@ -161,7 +165,7 @@ export default function BracketMethodConfig({ onRun, error, initialParams }: Bra
               <span className="text-zinc-400 text-sm">...</span>
             )}
           </div>
-          
+
           <div className="flex flex-wrap gap-1.5 pt-1">
             {SYMBOLS.map(([label, text, back]) => (
               <button
@@ -179,68 +183,78 @@ export default function BracketMethodConfig({ onRun, error, initialParams }: Bra
 
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label htmlFor="aStr" className="text-sm font-medium">Lower Bound (xl)</Label>
-            <Input 
-              id="aStr" 
+            <Label htmlFor="x0Str" className="text-sm font-medium">Initial Guess 1 (x₀)</Label>
+            <Input
+              id="x0Str"
               type="number"
-              value={aStr} 
-              onChange={(e) => setAStr(e.target.value)} 
-              className="h-11 text-base font-mono"
+              step="any"
+              value={x0Str}
+              onChange={(e) => setX0Str(e.target.value)}
+              placeholder="e.g. 1"
+              className="font-mono h-10"
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="bStr" className="text-sm font-medium">Upper Bound (xu)</Label>
-            <Input 
-              id="bStr" 
+            <Label htmlFor="x1Str" className="text-sm font-medium">Initial Guess 2 (x₁)</Label>
+            <Input
+              id="x1Str"
               type="number"
-              value={bStr} 
-              onChange={(e) => setBStr(e.target.value)} 
-              className="h-11 text-base font-mono"
+              step="any"
+              value={x1Str}
+              onChange={(e) => setX1Str(e.target.value)}
+              placeholder="e.g. 2"
+              className="font-mono h-10"
             />
           </div>
         </div>
 
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label htmlFor="toleranceStr" className="text-sm font-medium">Tolerance (ε)</Label>
-            <Input 
-              id="toleranceStr" 
+            <Label htmlFor="tolerance" className="text-sm font-medium">Tolerance (ε)</Label>
+            <Input
+              id="tolerance"
               type="number"
-              value={toleranceStr} 
-              onChange={(e) => setToleranceStr(e.target.value)} 
-              step="0.0001"
-              className="h-11 text-base font-mono"
+              step="any"
+              value={toleranceStr}
+              onChange={(e) => setToleranceStr(e.target.value)}
+              placeholder="0.0001"
+              className="font-mono h-10"
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="maxIterationsStr" className="text-sm font-medium">Max Iterations</Label>
-            <Input 
-              id="maxIterationsStr" 
+            <Label htmlFor="maxIterations" className="text-sm font-medium">Max Iterations</Label>
+            <Input
+              id="maxIterations"
               type="number"
-              value={maxIterationsStr} 
-              onChange={(e) => setMaxIterationsStr(e.target.value)} 
-              className="h-11 text-base font-mono"
+              value={maxIterationsStr}
+              onChange={(e) => setMaxIterationsStr(e.target.value)}
+              placeholder="50"
+              className="font-mono h-10"
             />
           </div>
         </div>
 
-        <div className="bg-blue-50/50 p-4 rounded-lg border border-blue-100 text-sm text-blue-900 space-y-2">
-          <div className="flex items-center gap-2 font-medium">
-            <Info className="w-4 h-4" /> Requirements
+        <div className="p-3 bg-blue-50/60 border border-blue-100 rounded-lg text-xs text-blue-900 space-y-1.5">
+          <div className="font-semibold flex items-center gap-1.5 text-blue-950">
+            <Info className="w-3.5 h-3.5 text-blue-600" />
+            Secant Method Guidelines
           </div>
-          <ul className="list-disc list-inside space-y-1 ml-1 text-blue-800">
-            <li>xl must be less than xu</li>
-            <li>f(xl) and f(xu) must have opposite signs</li>
-            <li>Tolerance must be {'>'} 0</li>
-            <li>Max iterations must be {'>'} 0</li>
+          <ul className="list-disc list-inside space-y-1 text-blue-800/90 pl-1">
+            <li>Open method (does not require bracketed signs)</li>
+            <li>Superlinear rate of convergence (order ≈ 1.618)</li>
+            <li>Secant line connects consecutive points <code className="font-mono bg-blue-100/70 px-1 py-0.5 rounded">(x_{'{i-1}'}, f(x_{'{i-1}'}))</code> and <code className="font-mono bg-blue-100/70 px-1 py-0.5 rounded">(x_i, f(x_i))</code></li>
+            <li>Requires <code className="font-mono bg-blue-100/70 px-1 py-0.5 rounded">x₀ ≠ x₁</code> and <code className="font-mono bg-blue-100/70 px-1 py-0.5 rounded">f(x_i) ≠ f(x_{'{i-1}'})</code></li>
           </ul>
         </div>
-      </CardContent>
-      <CardFooter className="pt-2">
-        <Button onClick={handleRun} className="w-full h-11 text-base" disabled={isValid === false}>
+
+        <button
+          type="button"
+          onClick={handleRun}
+          className="w-full py-2.5 px-4 bg-zinc-900 hover:bg-zinc-800 text-white font-medium text-sm rounded-lg transition-colors shadow-sm cursor-pointer"
+        >
           Calculate Root
-        </Button>
-      </CardFooter>
+        </button>
+      </CardContent>
     </Card>
   )
 }

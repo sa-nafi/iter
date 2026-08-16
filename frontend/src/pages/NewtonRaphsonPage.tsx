@@ -1,21 +1,21 @@
 import { useNavigate } from 'react-router-dom'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import AlgorithmPageTemplate from '../components/algorithms/AlgorithmPageTemplate'
-import { runFalsePosition } from '../lib/falsePosition'
+import NewtonRaphsonTemplate from '../components/algorithms/NewtonRaphsonTemplate'
+import { runNewtonRaphson } from '../lib/newtonRaphson'
 
-export default function FalsePositionPage() {
+export default function NewtonRaphsonPage() {
   const navigate = useNavigate()
 
   const selector = (
-    <Select 
-      defaultValue="False-Position Method"
+    <Select
+      defaultValue="Newton-Raphson Method"
       onValueChange={(val) => {
         if (val === 'Bisection Method') {
           navigate('/algorithms/bisection')
+        } else if (val === 'False-Position Method') {
+          navigate('/algorithms/false-position')
         } else if (val === 'Fixed-Point Iteration') {
           navigate('/algorithms/fixed-point')
-        } else if (val === 'Newton-Raphson Method') {
-          navigate('/algorithms/newton-raphson')
         } else if (val === 'Secant Method') {
           navigate('/algorithms/secant')
         }
@@ -35,9 +35,16 @@ export default function FalsePositionPage() {
   )
 
   return (
-    <AlgorithmPageTemplate
-      methodId="false-position"
-      onRun={(params) => runFalsePosition(params.funcStr, params.aStr, params.bStr, params.toleranceStr, params.maxIterationsStr)}
+    <NewtonRaphsonTemplate
+      onRun={(params) =>
+        runNewtonRaphson(
+          params.funcStr,
+          params.x0Str,
+          params.toleranceStr,
+          params.maxIterationsStr,
+          params.customDerivStr
+        )
+      }
       selector={selector}
     />
   )

@@ -1,19 +1,19 @@
 import { useNavigate } from 'react-router-dom'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import AlgorithmPageTemplate from '../components/algorithms/AlgorithmPageTemplate'
-import { runFalsePosition } from '../lib/falsePosition'
+import FixedPointTemplate from '../components/algorithms/FixedPointTemplate'
+import { runFixedPoint } from '../lib/fixedPoint'
 
-export default function FalsePositionPage() {
+export default function FixedPointPage() {
   const navigate = useNavigate()
 
   const selector = (
-    <Select 
-      defaultValue="False-Position Method"
+    <Select
+      defaultValue="Fixed-Point Iteration"
       onValueChange={(val) => {
         if (val === 'Bisection Method') {
           navigate('/algorithms/bisection')
-        } else if (val === 'Fixed-Point Iteration') {
-          navigate('/algorithms/fixed-point')
+        } else if (val === 'False-Position Method') {
+          navigate('/algorithms/false-position')
         } else if (val === 'Newton-Raphson Method') {
           navigate('/algorithms/newton-raphson')
         } else if (val === 'Secant Method') {
@@ -35,9 +35,8 @@ export default function FalsePositionPage() {
   )
 
   return (
-    <AlgorithmPageTemplate
-      methodId="false-position"
-      onRun={(params) => runFalsePosition(params.funcStr, params.aStr, params.bStr, params.toleranceStr, params.maxIterationsStr)}
+    <FixedPointTemplate
+      onRun={(params) => runFixedPoint(params.gFuncStr, params.x0Str, params.toleranceStr, params.maxIterationsStr)}
       selector={selector}
     />
   )

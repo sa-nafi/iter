@@ -4,9 +4,9 @@
 
 - [x] Bisection
 - [x] False Position
-- [ ] Fixed Point
-- [ ] Newton-Raphson
-- [ ] Secant
+- [x] Fixed Point
+- [x] Newton-Raphson
+- [x] Secant
 
 ## QOL 1
 

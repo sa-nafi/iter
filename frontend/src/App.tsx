@@ -4,6 +4,9 @@ import LandingPage from './pages/LandingPage'
 
 const BisectionPage = lazy(() => import('./pages/BisectionPage'))
 const FalsePositionPage = lazy(() => import('./pages/FalsePositionPage'))
+const FixedPointPage = lazy(() => import('./pages/FixedPointPage'))
+const NewtonRaphsonPage = lazy(() => import('./pages/NewtonRaphsonPage'))
+const SecantPage = lazy(() => import('./pages/SecantPage'))
 const DocumentationPage = lazy(() => import('./pages/DocumentationPage'))
 
 // A simple loading spinner to show while the heavy algorithm page loads
@@ -37,6 +40,30 @@ function App() {
             element={
               <Suspense fallback={<PageLoader />}>
                 <FalsePositionPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/algorithms/fixed-point"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <FixedPointPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/algorithms/newton-raphson"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <NewtonRaphsonPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/algorithms/secant"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <SecantPage />
               </Suspense>
             }
           />
